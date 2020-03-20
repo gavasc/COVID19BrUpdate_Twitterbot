@@ -10,10 +10,10 @@ async function getCases(countrySearch){
         for(let i = 0; i < item.length; i++){
 
             if(Object.values(item[i])[0] == countrySearch ){
-                cases.totalCases = item[i].TotalCases;
-                cases.totalDeaths = item[i].TotalDeaths;
-                cases.totalRecovered = item[i].TotalRecovered;
-                cases.activeCases = item[i].ActiveCases;
+                cases.totalCases = parseInt(item[i].TotalCases);
+                cases.totalDeaths = parseInt(item[i].TotalDeaths);
+                cases.totalRecovered = parseInt(item[i].TotalRecovered);
+                cases.activeCases = parseInt(item[i].ActiveCases);
 
                 break;
             }
