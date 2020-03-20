@@ -36,11 +36,11 @@ function postUpdate(){
     else if(updateCases.newRecovered > 0)
         text = `Mais ${updateCases.newRecovered} caso(s) de recuperação no país.\nAgora com um total de ${cases.totalRecovered} casos curados.`;
 
-    let tweet = {
-        status: text
-    }
+    // let tweet = {
+    //     status: text
+    // }
 
-    bot.post('statuses/update', tweet, (err, data, response) => {
+    bot.post('statuses/update', { status:text }, (err, data, response) => {
         if(err) console.log(err);
         else console.log('Success');
     })
