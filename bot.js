@@ -49,11 +49,11 @@ function postUpdate(){
 function postCurrentTotal(){
     let text = `Até agora temos no Brasil:\n\n-${cases.totalCases} casos confirmados\n-${cases.totalDeaths} mortes confirmadas\n-${cases.totalRecovered} casos de recuperação\n-${cases.activeCases} casos ativos`;
 
-    let tweet = {
-        status: text
-    }
+    // let tweet = {
+    //     status: text
+    // }
 
-    bot.post('statuses/update', tweet, (err, data, response) => {
+    bot.post('statuses/update', { status: text }, (err, data, response) => {
         if(err) console.log(err);
         else console.log('Success');
     })
@@ -76,5 +76,5 @@ async function update(country){
 async function begin() {
     cases = await control.getCases('Brazil');
 
-//    postCurrentTotal();
+    postCurrentTotal();
 }
