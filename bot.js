@@ -6,7 +6,6 @@ const control = require('./casesControler');
 var cases = {};
 var updateCases = {};
 
-begin();
 
 setInterval( () => {
     check('Brazil');
@@ -29,12 +28,12 @@ async function check(country){
 function postUpdate(){
     let text;
 
-    if(updateCases.newCases > 0) text = `Mais ${updateCases.newCases} novo(s) caso(s) reportados no país.
-                                Agora com um total de ${cases.totalCases} casos, sendo ${cases.activeCases} casos ativos`;
-    else if(updateCases.newDeaths > 0) text = `Mais ${updateCases.newDeaths} óbito(s) devido ao vírus no país.
-                                Agora com um total de ${cases.totalDeaths} mortes.`;
-    else if(updateCases.newRecovered > 0) text = `Mais ${updateCases.newRecovered} caso(s) de recuperação no país.
-                                Agora com um total de ${cases.totalRecovered} casos curados.`;
+    if(updateCases.newCases > 0) 
+        text = `Mais ${updateCases.newCases} novo(s) caso(s) reportados no país.\nAgora com um total de ${cases.totalCases} casos, sendo ${cases.activeCases} casos ativos`;
+    else if(updateCases.newDeaths > 0) 
+        text = `Mais ${updateCases.newDeaths} óbito(s) devido ao vírus no país.\nAgora com um total de ${cases.totalDeaths} mortes.`;
+    else if(updateCases.newRecovered > 0)
+        text = `Mais ${updateCases.newRecovered} caso(s) de recuperação no país.\nAgora com um total de ${cases.totalRecovered} casos curados.`;
 
     let tweet = {
         status: text
@@ -67,10 +66,14 @@ async function update(country){
     updateCases.newRecovered = newCases.totalRecovered - cases.totalRecovered;
     updateCases.activeCases = newCases.activeCases;
 
+    cases.totalCases += updateCases.newCases;
+    cases.totalDeaths += updateCases.newDeaths;
+    cases.totalRecovered += updateCases.newRecovered;
+    cases.activeCases = updateCases.activeCases;
 }
 
-async function begin() {
-    cases = await control.getCases('Brazil');
+// async function begin() {
+//     cases = await control.getCases('Brazil');
 
-    postCurrentTotal();
-}
+//     postCurrentTotal();
+// }
