@@ -6,6 +6,7 @@ const control = require('./casesControler');
 var cases = {};
 var updateCases = {};
 
+begin();
 
 setInterval( () => {
     check('Brazil');
@@ -72,8 +73,8 @@ async function update(country){
     cases.activeCases = updateCases.activeCases;
 }
 
-// async function begin() {
-//     cases = await control.getCases('Brazil');
+async function begin() {
+    cases = await control.getCases('Brazil');
 
-//     postCurrentTotal();
-// }
+//    postCurrentTotal();
+}
