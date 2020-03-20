@@ -29,13 +29,13 @@ async function check(country){
 function postUpdate(){
     let text;
 
-    if(updateCases.newCases > 0){
+    if(updateCases.newCases != 0){
         text = `Mais ${updateCases.newCases} novo(s) caso(s) reportados no país.\nAgora com um total de ${cases.totalCases} casos, sendo ${cases.activeCases} casos ativos`;
         console.log('1');
-    } else if(updateCases.newDeaths > 0){
+    } else if(updateCases.newDeaths != 0){
         text = `Mais ${updateCases.newDeaths} óbito(s) devido ao vírus no país.\nAgora com um total de ${cases.totalDeaths} mortes.`;
         console.log('2');
-    } else if(updateCases.newRecovered > 0){
+    } else if(updateCases.newRecovered != 0){
         text = `Mais ${updateCases.newRecovered} caso(s) de recuperação no país.\nAgora com um total de ${cases.totalRecovered} casos curados.`;
         console.log('3');
     }
