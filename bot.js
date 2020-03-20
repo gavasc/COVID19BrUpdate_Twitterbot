@@ -79,6 +79,12 @@ async function update(country){
 
 async function begin() {
     cases = await control.getCases('Brazil');
+    updateCases = {
+        newCases: 0,
+        newDeaths: 0,
+        newRecovered: 0,
+        activeCases: 0
+    }
 
     // postCurrentTotal();
 }
