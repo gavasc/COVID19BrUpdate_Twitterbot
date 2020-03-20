@@ -29,20 +29,24 @@ async function check(country){
 function postUpdate(){
     let text;
 
-    if(updateCases.newCases > 0) 
+    if(updateCases.newCases > 0){
         text = `Mais ${updateCases.newCases} novo(s) caso(s) reportados no país.\nAgora com um total de ${cases.totalCases} casos, sendo ${cases.activeCases} casos ativos`;
-    else if(updateCases.newDeaths > 0) 
+        console.log('1');
+    } else if(updateCases.newDeaths > 0){
         text = `Mais ${updateCases.newDeaths} óbito(s) devido ao vírus no país.\nAgora com um total de ${cases.totalDeaths} mortes.`;
-    else if(updateCases.newRecovered > 0)
+        console.log('2');
+    } else if(updateCases.newRecovered > 0){
         text = `Mais ${updateCases.newRecovered} caso(s) de recuperação no país.\nAgora com um total de ${cases.totalRecovered} casos curados.`;
+        console.log('3');
+    }
 
     // let tweet = {
     //     status: text
     // }
 
-    bot.post('statuses/update', { status:text }, (err, data, response) => {
+    bot.post('statuses/update', { status: text }, (err, data, response) => {
         if(err) console.log(err);
-        else console.log('Success');
+        else console.log('Update success');
     })
 }
 
