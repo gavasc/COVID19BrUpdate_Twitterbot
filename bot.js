@@ -48,6 +48,8 @@ function postUpdate(){
         if(err) console.log(err);
         else console.log('Update success');
     })
+
+    console.log(updateCases);
 }
 
 function postCurrentTotal(){
