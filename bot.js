@@ -13,6 +13,7 @@ setInterval( () => {
 }, 900000); //15min
 
 async function check(country){
+
     if(await control.hasNewCases(country, cases)){
         update(country);
         postUpdate();
@@ -20,18 +21,16 @@ async function check(country){
             postCurrentTotal();
         }, 180000); //3min
     }
-
-    console.log('------------------------------');
 }
 
 function postUpdate(){
     let text;
 
-    if(updateCases.newCases > 0) text = `Mais ${updateCases.newCases} novos casos reportados no país.
+    if(updateCases.newCases > 0) text = `Mais ${updateCases.newCases} novo(s) caso(s) reportados no país.
                                 Agora com um total de ${cases.totalCases} casos, sendo ${cases.activeCases} casos ativos`;
-    else if(updateCases.newDeaths > 0) text = `Mais ${updateCases.newDeaths} óbitos devido ao vírus no país.
+    else if(updateCases.newDeaths > 0) text = `Mais ${updateCases.newDeaths} óbito(s) devido ao vírus no país.
                                 Agora com um total de ${cases.totalDeaths} mortes.`;
-    else if(updateCases.newRecovered > 0) text = `Mais ${updateCases.newRecovered} casos de recuperação no país.
+    else if(updateCases.newRecovered > 0) text = `Mais ${updateCases.newRecovered} caso(s) de recuperação no país.
                                 Agora com um total de ${cases.totalRecovered} casos curados.`;
 
     let tweet = {
