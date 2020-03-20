@@ -4,7 +4,8 @@
   "description": "Twitter bot to update followers about coronavirus in Brazil",
   "main": "bot.js",
   "scripts": {
-    "test": "test"
+    "test": "test",
+    "start": "node bot.js;"
   },
   "author": "Gabriel Vasconcelos",
   "license": "ISC",
