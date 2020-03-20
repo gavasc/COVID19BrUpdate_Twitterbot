@@ -20,6 +20,9 @@ async function check(country){
         setTimeout(() => {
             postCurrentTotal();
         }, 180000); //3min
+    } else {
+        let dateObj = new Date();
+        console.log(`Without new cases at ${dateObj.getDate}/${dateObj.getMonth}-${dateObj.getHours}:${dateObj.getMinutes}`);
     }
 }
 
