@@ -76,5 +76,5 @@ async function update(country){
 async function begin() {
     cases = await control.getCases('Brazil');
 
-    postCurrentTotal();
+    // postCurrentTotal();
 }
