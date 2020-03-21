@@ -28,6 +28,7 @@ async function check(country){
 
 function postUpdate(){
     let text;
+    let hashtags = '\n\n#covid19 #COVID-19 #covid19brasil';
 
     if(updateCases.newCases != 0){
         text = `Mais ${updateCases.newCases} novo(s) caso(s) reportados no país.\nAgora com um total de ${cases.totalCases} casos, sendo ${cases.activeCases} casos ativos`;
@@ -44,6 +45,8 @@ function postUpdate(){
     //     status: text
     // }
 
+    text = text.concat(hashtags);
+
     bot.post('statuses/update', { status: text }, (err, data, response) => {
         if(err) console.log(err);
         else console.log('Update success');
@@ -54,10 +57,13 @@ function postUpdate(){
 
 function postCurrentTotal(){
     let text = `Até agora temos no Brasil:\n\n-${cases.totalCases} casos confirmados\n-${cases.totalDeaths} mortes confirmadas\n-${cases.totalRecovered} casos de recuperação\n-${cases.activeCases} casos ativos`;
+    let hashtags = '\n\n#covid19 #COVID-19 #covid19brasil';
 
     // let tweet = {
     //     status: text
     // }
+    
+    text = text.concat(hashtags);
 
     bot.post('statuses/update', { status: text }, (err, data, response) => {
         if(err) console.log(err);
