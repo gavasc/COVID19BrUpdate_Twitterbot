@@ -74,12 +74,12 @@ function postCurrentTotal(){
 
 async function update(country){
     let newCases = await control.getCases(country);
-    updateCases = {};
-
-    updateCases.newCases = newCases.totalCases - cases.totalCases;
-    updateCases.newDeaths = newCases.totalDeaths - cases.totalDeaths;
-    updateCases.newRecovered = newCases.totalRecovered - cases.totalRecovered;
-    updateCases.activeCases = newCases.activeCases;
+    updateCases = {
+        'newCases': newCases.totalCases - cases.totalCases,
+        'newDeaths': newCases.totalDeaths - cases.totalDeaths,
+        'newRecovered': newCases.totalRecovered - cases.totalRecovered,
+        'activeCases': newCases.activeCases
+    };
 
     cases.totalCases += updateCases.newCases;
     cases.totalDeaths += updateCases.newDeaths;
@@ -89,12 +89,6 @@ async function update(country){
 
 async function begin() {
     cases = await control.getCases('Brazil');
-    updateCases = {
-        newCases: 0,
-        newDeaths: 0,
-        newRecovered: 0,
-        activeCases: 0
-    }
 
     // postCurrentTotal();
 }
