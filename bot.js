@@ -16,6 +16,9 @@ async function check(country){
 
     if(await control.hasNewCases(country, cases)){
         update(country);
+
+        console.log(updateCases);
+
         postUpdate();
         setTimeout(() => {
             postCurrentTotal();
@@ -51,8 +54,6 @@ function postUpdate(){
         if(err) console.log(err);
         else console.log('Update success');
     })
-
-    console.log(updateCases);
 }
 
 function postCurrentTotal(){
