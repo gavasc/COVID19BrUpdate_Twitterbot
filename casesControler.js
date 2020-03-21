@@ -11,9 +11,9 @@ async function getCases(countrySearch){
 
             if(Object.values(item[i])[0] == countrySearch ){
                 cases.totalCases = parseInt(item[i].TotalCases.replace(",", ""));
-                cases.totalDeaths = parseInt(item[i].TotalDeaths);
-                cases.totalRecovered = parseInt(item[i].TotalRecovered);
-                cases.activeCases = parseInt(item[i].ActiveCases);
+                cases.totalDeaths = parseInt(item[i].TotalDeaths.replace(",", ""));
+                cases.totalRecovered = parseInt(item[i].TotalRecovered.replace(",", ""));
+                cases.activeCases = parseInt(item[i].ActiveCases.replace(",", ""));
 
                 break;
             }
