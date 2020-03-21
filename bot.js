@@ -67,6 +67,7 @@ function postCurrentTotal(){
 
 async function update(country){
     let newCases = await control.getCases(country);
+    updateCases = {};
 
     updateCases.newCases = newCases.totalCases - cases.totalCases;
     updateCases.newDeaths = newCases.totalDeaths - cases.totalDeaths;
