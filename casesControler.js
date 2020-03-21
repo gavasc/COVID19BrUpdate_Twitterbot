@@ -29,6 +29,10 @@ async function hasNewCases(country, currentCases){
 
     if(currentCases.totalCases < fetchedCases.totalCases) {
         awnser = true;
+    } else if (currentCases.totalDeaths < fetchedCases.totalDeaths){
+        awnser = true;
+    } else if (currentCases.totalRecovered < fetchedCases.totalRecovered){
+        awnser = true;
     }
 
     console.log( currentCases.totalCases +'--'+ fetchedCases.totalCases+'--'+ (currentCases.totalCases < fetchedCases.totalCases))
