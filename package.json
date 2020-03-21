@@ -10,7 +10,7 @@
   "author": "Gabriel Vasconcelos",
   "license": "ISC",
   "dependencies": {
-    "covid19-api": "^1.0.4",
+    "covid19-gatherer": "^1.0.0",
     "dotenv": "^8.2.0",
     "twit": "^2.2.11"
   }

@@ -1,5 +1,7 @@
 .env
-node_modules/
 
 profileImg.jpg
 backgroundImg.jpg
+
+old
+node_modules

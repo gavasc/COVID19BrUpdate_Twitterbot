@@ -1,4 +1,4 @@
-const covidapi = require('covid19-api');
+const covidapi = require('covid19-gatherer');
 
 async function getCases(countrySearch){
     var cases = {};
