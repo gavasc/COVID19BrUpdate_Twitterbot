@@ -1,10 +1,7 @@
-const Twit = require('twit');
-const config = require('./config');
-const bot = new Twit(config);
-
 const control = require('./casesControler');
-var cases = {};
-var updateCases = {};
+const twitC = require('./twitControler');
+let cases = {};
+let updatedCases = {};
 
 begin();
 
@@ -15,82 +12,69 @@ setInterval( () => {
 async function check(country){
 
     if(await control.hasNewCases(country, cases)){
-        update(country);
+        await update(country);
+        postUpdate();
 
-        console.log(updateCases);
-
-        postCurrentTotal();
-
-        // postUpdate();
-        // setTimeout(() => {
-        //     postCurrentTotal();
-        // }, 180000); //3min
+        setTimeout(() => {
+            postCurrentTotal();
+        }, 180000); //3min
     } else {
-        let dateObj = new Date();
-        console.log(`Without new cases at ${dateObj.getDate}/${dateObj.getMonth}-${dateObj.getHours}:${dateObj.getMinutes}`);
+        console.log('No new cases');
     }
 }
 
 function postUpdate(){
-    let text;
+    let text = '';
     let hashtags = '\n\n#covid19 #COVID_19 #covid19brasil #coronavirusnobrasil';
 
-    if(updateCases.newCases != 0){
-        text = `Mais ${updateCases.newCases} novo(s) caso(s) reportados no país.\nAgora com um total de ${cases.totalCases} casos, sendo ${cases.activeCases} casos ativos`;
+    if(updatedCases.difTotal > 0){
+        text = text.concat('\n' + `Mais ${updatedCases.difTotal} novo(s) caso(s) reportados no país.\nAgora com um total de ${cases.totalCases} casos, sendo ${cases.activeCases} casos ativos\n`);
         console.log('1');
-    } else if(updateCases.newDeaths != 0){
-        text = `Mais ${updateCases.newDeaths} óbito(s) devido ao vírus no país.\nAgora com um total de ${cases.totalDeaths} mortes.`;
+    }
+    if(updatedCases.difDeaths > 0){
+        text = text.concat('\n' +`Mais ${updatedCases.difDeaths} óbito(s) devido ao vírus no país.\nAgora com um total de ${cases.deathCases} mortes.\n`);
         console.log('2');
-    } else if(updateCases.newRecovered != 0){
-        text = `Mais ${updateCases.newRecovered} caso(s) de recuperação no país.\nAgora com um total de ${cases.totalRecovered} casos curados.`;
+    }
+    if(updatedCases.difRecovered > 0){
+        text = text.concat('\n' +`Mais ${updatedCases.difRecovered} caso(s) de recuperação no país.\nAgora com um total de ${cases.recoveredCases} casos curados.\n`);
         console.log('3');
     }
 
-    // let tweet = {
-    //     status: text
-    // }
-
     text = text.concat(hashtags);
-
-    bot.post('statuses/update', { status: text }, (err, data, response) => {
-        if(err) console.log(err);
-        else console.log('Update success');
-    })
+    
+    twitC.postTweet(text);
 }
 
 function postCurrentTotal(){
-    let text = `Até agora temos no Brasil:\n\n-${cases.totalCases} casos confirmados\n-${cases.totalDeaths} mortes confirmadas\n-${cases.totalRecovered} casos de recuperação\n-${cases.activeCases} casos ativos`;
+    let text = `Até agora temos no Brasil:\n\n-${cases.totalCases} casos confirmados\n-${cases.deathCases} mortes confirmadas\n-${cases.recoveredCases} casos de recuperação\n-${cases.activeCases} casos ativos, sendo que ${cases.criticalCases} desses casos são críticos`;
     let hashtags = '\n\n#covid19 #COVID_19 #covid19brasil #coronavirusnobrasil';
 
-    // let tweet = {
-    //     status: text
-    // }
-
     text = text.concat(hashtags);
-
-    bot.post('statuses/update', { status: text }, (err, data, response) => {
-        if(err) console.log(err);
-        else console.log('Success');
-    })
+    
+    twitC.postTweet(text);
 }
 
 async function update(country){
     let newCases = await control.getCases(country);
-    updateCases = {
-        'newCases': newCases.totalCases - cases.totalCases,
-        'newDeaths': newCases.totalDeaths - cases.totalDeaths,
-        'newRecovered': newCases.totalRecovered - cases.totalRecovered,
-        'activeCases': newCases.activeCases
-    };
+    
+    updatedCases = {
+        'difTotal': newCases.totalCases - cases.totalCases,
+        'difActive': newCases.activeCases - cases.activeCases,
+        'difCritical': newCases.criticalCases - cases.criticalCases,
+        'difRecovered': newCases.recoveredCases - cases.recoveredCases,
+        'difDeaths': newCases.deathCases - cases.deathCases
+    }
+    
+    cases.totalCases += updatedCases.difTotal;
+    cases.activeCases += updatedCases.difActive;
+    cases.criticalCases += updatedCases.difCritical;
+    cases.recoveredCases += updatedCases.difRecovered;
+    cases.deathCases += updatedCases.difDeaths;
 
-    cases.totalCases += updateCases.newCases;
-    cases.totalDeaths += updateCases.newDeaths;
-    cases.totalRecovered += updateCases.newRecovered;
-    cases.activeCases = updateCases.activeCases;
 }
 
 async function begin() {
-    cases = await control.getCases('Brazil');
+    cases = await control.getCases('brazil');
 
-    // postCurrentTotal();
+    //postCurrentTotal();
 }
