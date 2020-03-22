@@ -17,7 +17,7 @@ async function check(country){
 
         setTimeout(() => {
             postCurrentTotal();
-        }, 180000); //3min
+        }, 300000); //5min
     } else {
         console.log('No new cases');
     }
@@ -28,21 +28,29 @@ function postUpdate(){
     let hashtags = '\n\n#covid19 #COVID_19 #covid19brasil #coronavirusnobrasil';
 
     if(updatedCases.difTotal > 0){
-        text = text.concat('\n' + `Mais ${updatedCases.difTotal} novo(s) caso(s) reportados no país.\nAgora com um total de ${cases.totalCases} casos, sendo ${cases.activeCases} casos ativos\n`);
+        text = '\n' + `Mais ${updatedCases.difTotal} novo(s) caso(s) reportados no país.\nAgora com um total de ${cases.totalCases} casos, sendo ${cases.activeCases} casos ativos\n`;
+        twitC.postTweet( text.concat(hashtags) );
+
         console.log('1');
     }
     if(updatedCases.difDeaths > 0){
-        text = text.concat('\n' +`Mais ${updatedCases.difDeaths} óbito(s) devido ao vírus no país.\nAgora com um total de ${cases.deathCases} mortes.\n`);
+        text = '\n' +`Mais ${updatedCases.difDeaths} óbito(s) devido ao vírus no país.\nAgora com um total de ${cases.deathCases} mortes.\n`;
+        
+        setTimeout(()=>{
+            twitC.postTweet( text.concat(hashtags) );
+        }, 120000); //2min
+
         console.log('2');
     }
     if(updatedCases.difRecovered > 0){
-        text = text.concat('\n' +`Mais ${updatedCases.difRecovered} caso(s) de recuperação no país.\nAgora com um total de ${cases.recoveredCases} casos curados.\n`);
+        text = '\n' +`Mais ${updatedCases.difRecovered} caso(s) de recuperação no país.\nAgora com um total de ${cases.recoveredCases} casos curados.\n`;
+
+        setTimeout(()=>{
+            twitC.postTweet( text.concat(hashtags) );
+        }, 120000); //2min
+
         console.log('3');
     }
-
-    text = text.concat(hashtags);
-    
-    twitC.postTweet(text);
 }
 
 function postCurrentTotal(){
