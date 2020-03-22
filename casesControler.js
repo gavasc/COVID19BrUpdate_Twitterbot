@@ -1,24 +1,16 @@
-const covidapi = require('covid19-gatherer');
+const api = require('covid19-gatherer');
 
 async function getCases(countrySearch){
-    var cases = {};
 
-    await covidapi.getReports().then( obj => {
+    let fetchedCases = await api.getCasesByCountry(countrySearch);
 
-        let item = obj[0][0].table[0];
-
-        for(let i = 0; i < item.length; i++){
-
-            if(Object.values(item[i])[0] == countrySearch ){
-                cases.totalCases = parseInt(item[i].TotalCases.replace(",", ""));
-                cases.totalDeaths = parseInt(item[i].TotalDeaths.replace(",", ""));
-                cases.totalRecovered = parseInt(item[i].TotalRecovered.replace(",", ""));
-                cases.activeCases = parseInt(item[i].ActiveCases.replace(",", ""));
-
-                break;
-            }
-        }        
-    });
+    let cases = {
+        'totalCases': fetchedCases.total,
+        'activeCases': fetchedCases.activeCases.totalActiveCases,
+        'criticalCases': fetchedCases.activeCases.criticalCases,
+        'recoveredCases': fetchedCases.closedCases.recoveredCases,
+        'deathCases': fetchedCases.closedCases.deathCases
+    }
 
     return cases;
 }
@@ -26,16 +18,14 @@ async function getCases(countrySearch){
 async function hasNewCases(country, currentCases){
     let fetchedCases = await getCases(country);
     let awnser = false;
-
+    
     if(currentCases.totalCases < fetchedCases.totalCases) {
         awnser = true;
-    } else if (currentCases.totalDeaths < fetchedCases.totalDeaths){
+    } else if (currentCases.deathCases < fetchedCases.deathCases){
         awnser = true;
-    } else if (currentCases.totalRecovered < fetchedCases.totalRecovered){
+    } else if (currentCases.recoveredCases < fetchedCases.recoveredCases){
         awnser = true;
     }
-
-    console.log( currentCases.totalCases +'--'+ fetchedCases.totalCases+'--'+ (currentCases.totalCases < fetchedCases.totalCases))
     
     return awnser;
 }
