@@ -7,7 +7,7 @@ begin();
 
 setInterval( () => {
     check('Brazil');
-}, 900000); //15min
+}, 1800000); //30min
 
 async function check(country){
 
@@ -54,7 +54,7 @@ function postUpdate(){
 }
 
 function postCurrentTotal(){
-    let text = `Até agora temos no Brasil:\n\n-${cases.totalCases} casos confirmados\n-${cases.deathCases} mortes confirmadas\n-${cases.recoveredCases} casos de recuperação\n-${cases.activeCases} casos ativos, sendo que ${cases.criticalCases} desses casos são críticos`;
+    let text = `Até agora temos no Brasil:\n\n-${cases.totalCases} casos confirmados\n-${cases.deathCases} mortes confirmadas\n-${cases.recoveredCases} casos de recuperação\n-${cases.activeCases} casos ativos`;
     let hashtags = '\n\n#covid19 #COVID_19 #covid19brasil #coronavirusnobrasil';
 
     text = text.concat(hashtags);

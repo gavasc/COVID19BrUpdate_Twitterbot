@@ -15,7 +15,7 @@ check('brazil');
 
 setInterval( () => {
     check('brazil');
-}, 60000); // 1min  
+}, 60000); // 1min
 
 async function check(country){
 
